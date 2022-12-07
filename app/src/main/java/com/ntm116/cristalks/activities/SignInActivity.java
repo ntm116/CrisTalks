@@ -1,11 +1,10 @@
 package com.ntm116.cristalks.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.ntm116.cristalks.R;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.ntm116.cristalks.databinding.ActivitySignInBinding;
 
 public class SignInActivity extends AppCompatActivity {
@@ -24,4 +23,5 @@ public class SignInActivity extends AppCompatActivity {
         binding.textCreateNewAccount.setOnClickListener(v ->
                 startActivity(new Intent(getApplicationContext(), SignUpActivity.class)));
     }
+
 }
