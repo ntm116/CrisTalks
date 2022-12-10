@@ -4,6 +4,6 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@color/primary</item>
     </style>
 </resources>
