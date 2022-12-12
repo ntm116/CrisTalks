@@ -10,16 +10,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ntm116.cristalks.databinding.ItemContainerUserBinding;
+import com.ntm116.cristalks.listeners.UserListener;
 import com.ntm116.cristalks.models.User;
 
 import java.util.List;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHolder> {
     private final List<User> users;
+    private final UserListener userListener;
 
-    public UsersAdapter(List<User> users)
+    public UsersAdapter(List<User> users, UserListener userListener)
     {
         this.users = users;
+        this.userListener = userListener;
     }
 
     @NonNull
@@ -56,6 +59,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
             binding.imageProfile.setImageBitmap(getUserBitmap(user.image));
             binding.textName.setText(user.name);
             binding.textEmail.setText(user.email);
+            binding.getRoot().setOnClickListener(view -> userListener.OnUserClicked(user));
         }
     }
 

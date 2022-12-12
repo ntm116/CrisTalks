@@ -2,6 +2,7 @@ package com.ntm116.cristalks.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.ntm116.cristalks.adapters.UsersAdapter;
 import com.ntm116.cristalks.databinding.ActivityUsersBinding;
+import com.ntm116.cristalks.listeners.UserListener;
 import com.ntm116.cristalks.models.User;
 import com.ntm116.cristalks.utils.Constants;
 import com.ntm116.cristalks.utils.PreferenceManager;
@@ -17,7 +19,7 @@ import com.ntm116.cristalks.utils.PreferenceManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsersActivity extends AppCompatActivity {
+public class UsersActivity extends AppCompatActivity implements UserListener {
     private ActivityUsersBinding binding;
     private PreferenceManager preferenceManager;
 
@@ -66,7 +68,7 @@ public class UsersActivity extends AppCompatActivity {
 
                         if (userList.size() > 0)
                         {
-                            UsersAdapter usersAdapter = new UsersAdapter(userList);
+                            UsersAdapter usersAdapter = new UsersAdapter(userList, this);
                             binding.recyclerViewUsers.setAdapter(usersAdapter);
                             binding.recyclerViewUsers.setVisibility(View.VISIBLE);
                         } else {
@@ -92,5 +94,13 @@ public class UsersActivity extends AppCompatActivity {
         } else {
             binding.progressBar.setVisibility(View.INVISIBLE);
         }
+    }
+
+    @Override
+    public void OnUserClicked(User user) {
+        Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+        intent.putExtra(Constants.KEY_USER, user);
+        startActivity(intent);
+        finish();
     }
 }
