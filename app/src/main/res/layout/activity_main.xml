@@ -61,6 +61,24 @@
         app:layout_constraintTop_toBottomOf="@id/imageProfile"
         app:layout_constraintBottom_toBottomOf="parent"
         >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewRecentConversations"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            android:padding="@dimen/_20sdp"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_gravity="center"
+        />
 
     </FrameLayout>
 
