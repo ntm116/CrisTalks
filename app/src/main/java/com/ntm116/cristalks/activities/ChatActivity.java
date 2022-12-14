@@ -30,8 +30,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends BaseActivity {
     private ActivityChatBinding binding;
     private User receiverUser;
     private List<ChatMessage> chatMessages;
@@ -39,6 +40,7 @@ public class ChatActivity extends AppCompatActivity {
     private PreferenceManager preferenceManager;
     private FirebaseFirestore db;
     private String conversationId;
+    private boolean isReceiverAvailable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,29 @@ public class ChatActivity extends AppCompatActivity {
         );
         binding.recyclerView.setAdapter(chatAdapter);
         db = FirebaseFirestore.getInstance();
+    }
+
+    private void listenReceiverAvailability()
+    {
+        db.collection(Constants.KEY_AVAILABILITY)
+                .document(receiverUser.id)
+                .addSnapshotListener(ChatActivity.this, (value, error) -> {
+                    if (error != null)
+                        return;
+                    if (value != null)
+                    {
+                        int availability = Objects.requireNonNull(
+                                value.getLong(Constants.KEY_AVAILABILITY)
+                        ).intValue();
+                        isReceiverAvailable = availability == 1;
+                    }
+                    if (isReceiverAvailable)
+                    {
+                        binding.textAvailability.setVisibility(View.VISIBLE);
+                    } else {
+                        binding.textAvailability.setVisibility(View.GONE);
+                    }
+                });
     }
 
     private void listenMessages()
@@ -204,4 +229,10 @@ public class ChatActivity extends AppCompatActivity {
             conversationId = documentSnapshot.getId();
         }
     };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        listenReceiverAvailability();
+    }
 }
