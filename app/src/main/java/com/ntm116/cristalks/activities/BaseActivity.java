@@ -1,6 +1,7 @@
 package com.ntm116.cristalks.activities;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,5 +33,9 @@ public class BaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         documentReference.update(Constants.KEY_AVAILABILITY, 1);
+    }
+
+    void showToast(String msg) {
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
     }
 }

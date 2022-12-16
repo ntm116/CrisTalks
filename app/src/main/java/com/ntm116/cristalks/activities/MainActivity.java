@@ -78,10 +78,6 @@ public class MainActivity extends BaseActivity implements ConversationListener {
         binding.imageProfile.setImageBitmap(bitmap);
     }
 
-    private void showToast(String msg) {
-        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-    }
-
     private void getToken()
     {
         FirebaseMessaging.getInstance().getToken().addOnSuccessListener(this::updateToken);

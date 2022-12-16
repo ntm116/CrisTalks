@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -68,13 +69,14 @@ public class ChatActivity extends BaseActivity {
 
     private void listenReceiverAvailability()
     {
-        db.collection(Constants.KEY_AVAILABILITY)
+        db.collection(Constants.KEY_COLLECTION_USERS)
                 .document(receiverUser.id)
                 .addSnapshotListener(ChatActivity.this, (value, error) -> {
                     if (error != null)
                         return;
                     if (value != null)
                     {
+                        Log.d("EEEEEE", "" + (value.getLong(Constants.KEY_AVAILABILITY) == null));
                         int availability = Objects.requireNonNull(
                                 value.getLong(Constants.KEY_AVAILABILITY)
                         ).intValue();
